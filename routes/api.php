@@ -22,6 +22,6 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function(){
     Route::apiResource('users', UserController::class);
     Route::apiResource('tasks', TaskController::class);
-    Route::get('task/mark-completed/{task}', [TaskController::class, 'markCompleted']);
-    Route::get('task/mark-closed/{task}', [TaskController::class, 'markClosed']);
+    Route::put('tasks/{task}/mark-completed', [TaskController::class, 'markCompleted']);
+    Route::put('tasks/{task}/mark-closed', [TaskController::class, 'markClosed']);
 });
