@@ -8,7 +8,8 @@ There are three controllers: AuthController, UserController and TaskController.
 AuthController is used for user registration and login.
 TaskController and UserController are auth protected and requires token for CRUD operations.
 
-# Following routes are available
+## Following routes are available
+```
   POST            api/auth/login ........................................................................ Api\AuthController@login
   POST            api/auth/register .................................................................... Api\AuthController@create
   GET|HEAD        api/task/mark-closed/{task} ...................................................... Api\TaskController@markClosed
@@ -23,3 +24,4 @@ TaskController and UserController are auth protected and requires token for CRUD
   GET|HEAD        api/users/{user} .......................................................... users.show › Api\UserController@show
   PUT|PATCH       api/users/{user} ...................................................... users.update › Api\UserController@update
   DELETE          api/users/{user} .................................................... users.destroy › Api\UserController@destroy
+```
