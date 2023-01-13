@@ -21,8 +21,8 @@ return new class extends Migration
             $table->date('due_date');
             $table->string('status')->default(TaskStatus::OPEN);
             $table->foreignId('user_id')->constrained('users');
-            $table->softDeletes();
-            $table->timestamps();
+            $table->softDeletesTz();
+            $table->timestampsTz();
         });
     }
 
