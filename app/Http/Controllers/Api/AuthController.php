@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -25,6 +27,7 @@ class AuthController extends Controller
                 [
                     'name' => 'required',
                     'email' => 'required|email|unique:users,email',
+                    'tenant' => 'required|string|unique:tenants,name',
                     'password' => 'required'
                 ]);
 
@@ -36,9 +39,15 @@ class AuthController extends Controller
                 ], 401);
             }
 
+            $tenant = Tenant::create([
+                'id' => (string) Str::uuid(),
+                'name' => $request->tenant,
+            ]);
+
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'tenant_id' => $tenant->id,
                 'password' => Hash::make($request->password)
             ]);
 
@@ -99,5 +108,10 @@ class AuthController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+
+    public function currentUser(Request $request): JsonResponse
+    {
+        return response()->json(\auth()->user(), 200);
     }
 }
