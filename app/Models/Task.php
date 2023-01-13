@@ -2,28 +2,21 @@
 
 namespace App\Models;
 
+use App\Traits\ExternalId;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Task extends Model
 {
-    use HasFactory;
+    use HasFactory, ExternalId;
 
     protected $fillable = [
       'name',
-      'body',
-      'due_date',
-      'status',
-      'user_id',
+      'url',
+      'timezone',
     ];
 
     protected $casts = [
         'due_date' => 'date'
     ];
-
-    public function createdBy(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
 }
